@@ -119,7 +119,7 @@
             </header>
             <div class ="sidebar">
                     <div align='center'>
-                        <img src="1.png" class="profile_image" alt="">
+                        <img src="{{ asset('image/darth.png') }}" class="profile_image" alt="">
                         <h4>{{ Auth::user()->name }}</h4>
                     </div>
                 <a href="{{ route('reservas.index') }}"><i class="far fa-calendar-alt"></i><span> Gestión eventos</span></a>
@@ -131,7 +131,7 @@
             <main class="py-3">
                 @yield('content')
             </main>
-        </div>
+        </div>5
     </div>
 </body>
 </html>
