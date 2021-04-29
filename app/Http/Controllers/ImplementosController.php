@@ -14,7 +14,8 @@ class ImplementosController extends Controller
      */
     public function index()
     {
-        //
+        $implementos = implementos::all();
+        return view('implemento.index', compact('implementos'));
     }
 
     /**
@@ -35,7 +36,10 @@ class ImplementosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $implemento = new implementos();
+        $implemento->nombre = $request->nombre;
+        $implemento->save();
+        return response($implemento);
     }
 
     /**
@@ -55,9 +59,10 @@ class ImplementosController extends Controller
      * @param  \App\Models\implementos  $implementos
      * @return \Illuminate\Http\Response
      */
-    public function edit(implementos $implementos)
+    public function edit($implementos)
     {
-        //
+        $implemento = implementos::find($implementos);
+        return response($implemento);
     }
 
     /**
@@ -69,7 +74,10 @@ class ImplementosController extends Controller
      */
     public function update(Request $request, implementos $implementos)
     {
-        //
+        $implemento = implementos::find($request->id);
+        $implemento->nombre = $request->nombre;
+        $implemento->save();
+        return response($implemento);
     }
 
     /**
@@ -78,8 +86,10 @@ class ImplementosController extends Controller
      * @param  \App\Models\implementos  $implementos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(implementos $implementos)
+    public function destroy(Request $request)
     {
-        //
+        $implemento = implementos::find($request->id);
+        $implemento->delete();
+        return response($implemento);
     }
 }

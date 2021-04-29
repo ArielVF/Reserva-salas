@@ -47,7 +47,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Editar una Sala</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Crear una Sala</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -65,8 +65,8 @@
                             </div>
                             <div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success">Crear sala</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success">Crear</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                 </div>
                             </div>
                     </form>
@@ -99,8 +99,8 @@
                         </div>
                         <div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Editar sala</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Editar</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </form>
@@ -108,38 +108,6 @@
             </div>
         </div>
     </div>
-
-    <!-- jquery -->
-    <script  src="https://code.jquery.com/jquery-3.5.1.js"></script> 
-    <script  src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js" defer></script>
-    <script  src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js" defer></script>
-    
-    <script>
-        $(document).ready(function() {
-            $('#salasTable').DataTable({
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
-            });
-        } );
-    </script>
 
     <script>
         $("#FormcrearSala").submit(function(e){
