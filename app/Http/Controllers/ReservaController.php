@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\reserva;
 use App\Models\bloque;
 use App\Models\espacio_fisico;
+use App\Models\User;
 use Illuminate\Http\Request;
 use DB;
 
@@ -17,12 +18,21 @@ class ReservaController extends Controller
      */
     public function index()
     {
-        $id = auth()->user()->id;
-        $sql = "SELECT * FROM `reserva` WHERE reserva.usuario_id = $id ORDER BY reserva.start DESC";
-        $reservas = DB::select($sql);
-        $bloques = bloque::all();
-        $salas = espacio_fisico::all();
-        return view('reservas.index', compact('reservas', 'bloques', 'salas'));
+        if(auth()->user()->role == 'admin'){
+            $todas_las_reservas = reserva::all()->sortByDesc("start");
+            $users = User::all();
+            $bloques = bloque::all();
+            $salas = espacio_fisico::all();
+            return view('reservas.index', compact('users','todas_las_reservas', 'bloques', 'salas'));
+        }
+        else{
+            $id = auth()->user()->id;
+            $sql = "SELECT * FROM `reserva` WHERE reserva.usuario_id = $id ORDER BY reserva.start DESC";
+            $reservas = DB::select($sql);
+            $bloques = bloque::all();
+            $salas = espacio_fisico::all();
+            return view('reservas.index', compact('reservas', 'bloques', 'salas'));
+        }
     }
 
     /**
@@ -95,8 +105,10 @@ class ReservaController extends Controller
      * @param  \App\Models\reserva  $reserva
      * @return \Illuminate\Http\Response
      */
-    public function destroy(reserva $reserva)
+    public function destroy(Request $request)
     {
-        //
+        $reserva = reserva::find($request->id);
+        $reserva->delete();
+        return response($reserva);
     }
 }

@@ -7,6 +7,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
+                            <div class="card-header">
+                                Reservar salas para {{$date}}
+                            </div>
                             <div class="card-body">
                                 <table id="salasTable" class="table table-striped">
                                     <thead>
@@ -25,22 +28,24 @@
                                                 <td>
                                                 <!--Filtramos de acuerdo a los bloques disponibles o asignados -->
                                                     @foreach($bloques as $bloque)
+                                                        <?php $no_asignado=true ?> 
                                                         @foreach($reservas as $reserva)
-                                                            @if($reserva->bloque_id == $bloque->id && $sala->id == $reserva->espacioFisico_id && $date == $reserva->start)
+                                                            @if($reserva->bloque_id == $bloque->id && $reserva->espacioFisico_id == $sala->id && $reserva->start == $date)
                                                                 @if($reserva->usuario_id == auth()->user()->id)
-                                                                    <a class="btn btn-primary" onclick="editarBloque('{{$bloque->id}}', '{{$bloque->hora_inicio}}', '{{$bloque->hora_termino}}', '{{$sala->id}}', '{{$date}}')">{{$bloque->id}}</a>
+                                                                    <a class="btn btn-primary" onclick="modificarBloque()">{{$bloque->id}}</a>
                                                                 @else
-                                                                    <a class="btn btn-danger" onclick="bloqueOcupado('{{$bloque->id}}', '{{$bloque->hora_inicio}}', '{{$bloque->hora_termino}}', '{{$sala->id}}', '{{$date}}')">{{$bloque->id}}</a>
-                                                                @endif
-                                                            <!--Agregar ifs por hora de inicio y termino de los blouqes -->
-                                                                
+                                                                    <a class="btn btn-danger" onclick="verBloque()">{{$bloque->id}}</a>
+                                                                @endif 
+                                                            <?php $no_asignado=false ?> 
+                                                            @break
                                                             @endif
                                                         @endforeach
-                                                        <a class="btn btn-success" onclick="asignarBloque('{{$bloque->id}}', '{{$bloque->hora_inicio}}', '{{$bloque->hora_termino}}', '{{$sala->id}}', '{{$date}}')">{{$bloque->id}}</a>
+                                                        @if($no_asignado)
+                                                            <a class="btn btn-success" onclick="asignarBloque('{{$bloque->id}}', '{{$bloque->hora_inicio}}', '{{$bloque->hora_termino}}', '{{$sala->id}}', '{{$date}}')">{{$bloque->id}}</a>
+                                                        @endif
                                                     @endforeach
-                                                    
                                                 </td>
-                                                <td><button type="button" class="btn btn-warning" style="float:right" data-toggle="modal" data-target="#implementosSala">Ver</button></td>
+                                                <td><a class="btn btn-warning" onclick="obtenerImplementos('{{$sala->id}}')">Ver</a></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -101,6 +106,53 @@
         </div>
     </div>
     
+    <!-- Modal ver Implementos -->
+    <div class="modal fade" id="implementosSala" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content col-12">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Implementos Sala</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="contenido" class="modal-body">
+                    <!-- aqui se muestran los implementos y footer modal-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para obtener implementos especificos de una sala al pulsar el boton ver -->
+    <script>
+        function obtenerImplementos(id) {
+            $.ajax({
+                url:"{{route('espaciotieneimplemento.show')}}",
+                    type:"GET",
+                    data:{
+                        id:id,
+                    },
+                    success:function(response){
+                        var texto = '<table class="table"><thead><tr><th>Nombre Implemento</th><th>Cantidad</th></tr></thead><tbody>';
+                        if(Object.entries(response).length === 0){
+                            texto = texto+'<tr><td>Sin implementos</td><td>0</td></tr>';
+                        }
+                        else{
+                            response.forEach(myFunction);
+                            function myFunction(value) {
+                                texto = texto+'<tr><td>'+value[0].nombre+'</td><td>'+value[0].cantidad+'</td></tr>';
+                            }
+
+                        }
+                        texto = texto+'</tbody></table><div class="modal-footer"><button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button></div>';
+                        $("#contenido").html(texto);
+                        $("#implementosSala").modal('show');
+                       
+                    }
+                });
+        }
+    </script>
+
     <script>
         function asignarBloque(id, hora_inicio, hora_termino, sala_id, fecha_actual){
             $("#fecha_actual").val(fecha_actual);

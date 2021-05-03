@@ -51,7 +51,7 @@
                     <form id="FormcrearImplemento">
                             @csrf
                             <div class="form-group">
-                                <label for="nombre">Sala</label>
+                                <label for="nombre">Implemento</label>
                                 <input type="text" class="form-control" id="nombre" placeholder="Ej: Proyector Data"> 
                             </div>
                             <div>

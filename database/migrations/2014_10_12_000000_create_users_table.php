@@ -20,13 +20,13 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->string('role')->nullable(); //Por ahora es nulo, aqui debe ser admin o profesor
+            $table->string('role')->default('profesor'); //Por ahora es nulo, aqui debe ser admin o profesor
+            $table->integer('reservas_permitidas')->default(5); //Por ahora, todos los profesores y administradores pueden designar 5 reservas como máximo. SE DEBE CAMBIAR
             $table->foreignId('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

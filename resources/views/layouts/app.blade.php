@@ -123,8 +123,10 @@
                         <h4>{{ Auth::user()->name }}</h4>
                     </div>
                 <a href="{{ route('reservas.index') }}"><i class="far fa-calendar-alt"></i><span> Gestión eventos</span></a>
-                <a href="{{ route('management.index') }}"><i class="fas fa-chalkboard-teacher"></i><span> Gestion Salas</span></a>
-                <a href="{{ route('implemento.index') }}"><i class="fas fa-chalkboard-teacher"></i><span> Gestion Implementos</span></a>
+                @if(Auth::user()->role == 'admin')
+                    <a href="{{ route('management.index') }}"><i class="fas fa-chalkboard-teacher"></i><span> Gestion Salas</span></a>
+                    <a href="{{ route('implemento.index') }}"><i class="fas fa-tools"></i><span> Gestion Implementos</span></a>
+                @endif
             </div>
         @endguest
 
