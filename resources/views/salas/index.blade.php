@@ -49,6 +49,15 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th colspan="4" style="text-align:right">
+                                            <span class="dot" style="height:15px;width:15px;background-color:blue;border-radius:50%;display:inline-block;"></span> Propios
+                                            <span class="dot" style="height:15px;width:15px;background-color:green;border-radius:50%;display:inline-block;"></span> Disponibles  
+                                            <span class="dot" style="height:15px;width:15px;background-color:red;border-radius:50%;display:inline-block;"></span> Ocupados
+                                        </th>
+                                    </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
